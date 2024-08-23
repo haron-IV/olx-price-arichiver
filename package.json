@@ -1,0 +1,31 @@
+{
+  "name": "olx-price-archiver",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run-watch": "node --watch ./dist/index.js",
+    "tsc-watch": "tsc --watch",
+    "dev": "pnpm run-watch & pnpm tsc-watch",
+    "eslint": "eslint . --fix"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@eslint/js": "^9.9.0",
+    "@types/dotenv": "^8.2.0",
+    "@types/eslint__js": "^8.42.3",
+    "@types/node": "^22.5.0",
+    "@types/prettier": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^9.9.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "globals": "^15.9.0",
+    "prettier": "^3.3.3",
+    "typescript": "^5.5.4",
+    "typescript-eslint": "^8.2.0"
+  }
+}
