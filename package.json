@@ -8,11 +8,10 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run-watch": "node --watch ./dist/index.js",
-    "tsc-watch": "tsc --watch",
-    "dev": "pnpm run-watch & pnpm tsc-watch",
+    "dev": "nodemon",
     "eslint": "eslint . --fix",
-    "init-app": "sh ./scripts/init-app.sh"
+    "init-app": "sh ./scripts/init-app.sh",
+    "run-init": "ts-patch install -s"
   },
   "keywords": [],
   "author": "",
@@ -28,11 +27,16 @@
     "dotenv": "^16.4.5",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
     "globals": "^15.9.0",
+    "nodemon": "^3.1.4",
     "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "ts-patch": "^3.2.1",
+    "tsc-alias": "^1.8.10",
+    "tsconfig-paths": "^4.2.0",
     "typescript": "^5.5.4",
-    "typescript-eslint": "^8.2.0"
+    "typescript-eslint": "^8.2.0",
+    "typescript-transform-paths": "^3.5.0"
   },
   "dependencies": {
     "node-notifier": "^10.0.1",

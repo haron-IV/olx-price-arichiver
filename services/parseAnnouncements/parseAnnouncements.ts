@@ -1,5 +1,4 @@
-import { timeStamp } from "console"
-import { Announcements } from "../getAnnouncements"
+import type { Announcements } from "../index"
 
 const safeProperty = (property?: any) => property || ""
 
@@ -20,3 +19,4 @@ export const parseAnnouncements = (announcements: Announcements) =>
   }))
 
 export type ParsedAnnouncements = ReturnType<typeof parseAnnouncements>
+export type Announcement = Exclude<ParsedAnnouncements, undefined>[0]

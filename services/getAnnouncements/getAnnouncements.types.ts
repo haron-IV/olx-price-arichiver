@@ -4,7 +4,7 @@ export interface Announcements {
   links: Links
 }
 
-export interface Data {
+interface Data {
   id: number
   url: string
   title: string
@@ -33,61 +33,51 @@ export interface Data {
   omnibus_pushup_time?: Date
 }
 
-export interface Category {
+interface Category {
   id: number
   type: string
 }
 
-export interface Contact {
+interface Contact {
   name: string
   phone: boolean
   chat: boolean
   negotiation: boolean
   courier: boolean
 }
-export interface Delivery {
+interface Delivery {
   rock: Rock
 }
 
-export interface Rock {
+interface Rock {
   offer_id: null
   active: boolean
   mode: string
 }
 
-export enum KeyParam {
+enum KeyParam {
   M = "m",
   PricePerM = "price_per_m",
 }
 
-export interface Location {
+interface Location {
   city: City
   district: District
   region: City
 }
 
-export interface City {
+interface City {
   id: number
-  name: Name
-  normalized_name: NormalizedName
+  name: string
+  normalized_name: string
 }
 
-export enum Name {
-  Katowice = "Katowice",
-  Śląskie = "Śląskie",
-}
-
-export enum NormalizedName {
-  Katowice = "katowice",
-  Slaskie = "slaskie",
-}
-
-export interface District {
+interface District {
   id: number
   name: string
 }
 
-export interface Map {
+interface Map {
   zoom: number
   lat: number
   lon: number
@@ -95,29 +85,29 @@ export interface Map {
   show_detailed: boolean
 }
 
-export interface Param {
+interface Param {
   key: string
   name: string
   type: Type
   value: Value
 }
 
-export enum Type {
+enum Type {
   Input = "input",
   Price = "price",
   Select = "select",
 }
 
-export interface Value {
+interface Value {
   key?: string
   label: string
 }
 
-export interface Partner {
+interface Partner {
   code: string
 }
 
-export interface Photo {
+interface Photo {
   id: number
   filename: string
   rotation: number
@@ -126,7 +116,7 @@ export interface Photo {
   link: string
 }
 
-export interface Promotion {
+interface Promotion {
   highlighted: boolean
   urgent: boolean
   top_ad: boolean
@@ -135,7 +125,7 @@ export interface Promotion {
   premium_ad_page: boolean
 }
 
-export interface Safedeal {
+interface Safedeal {
   weight: number
   weight_grams: number
   status: string
@@ -143,11 +133,11 @@ export interface Safedeal {
   allowed_quantity: any[]
 }
 
-export interface Shop {
+interface Shop {
   subdomain: null
 }
 
-export interface User {
+interface User {
   id: number
   created: Date
   other_ads_enabled: boolean
@@ -167,16 +157,16 @@ export interface User {
   uuid: string
 }
 
-export interface Links {
+interface Links {
   self: First
   first: First
 }
 
-export interface First {
+interface First {
   href: string
 }
 
-export interface Metadata {
+interface Metadata {
   total_elements: number
   promoted: any[]
 }

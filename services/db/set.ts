@@ -1,17 +1,12 @@
 import { writeFileSync } from "fs"
-import { ParsedAnnouncements } from "../parseAnnouncements/parseAnnouncements"
+import { error } from "@/utils"
+import { type ParsedAnnouncements } from "../index"
 import { getDb } from "./get"
-import { error } from "../../utils/error"
 
-export const saveDb = (data: ParsedAnnouncements) => {
+export const setDb = (data: ParsedAnnouncements) => {
   const db = getDb()
-
   if (!db?.items || !data) return
-
-  const combined = {
-    items: [...db.items, ...data],
-  }
-
+  const combined = { items: [...db.items, ...data] }
   try {
     writeFileSync("./db/data.json", JSON.stringify(combined))
   } catch {

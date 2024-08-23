@@ -1,5 +1,5 @@
 import { error } from "console"
-import { Announcements } from "./getAnnouncements.types"
+import type { Announcements } from "./getAnnouncements.types"
 
 export const getAnnouncements = async (): Promise<Announcements | string | undefined> => {
   try {
@@ -33,7 +33,7 @@ export const getAnnouncements = async (): Promise<Announcements | string | undef
 
     return (await response.json()) as Announcements
   } catch (err) {
-    error("ERROR WHILE FETCHING: ", err)
+    error("ERROR WHILE FETCHING:", err)
     if (err && typeof err == "object" && "error" in err) return err.error as string
   }
 }

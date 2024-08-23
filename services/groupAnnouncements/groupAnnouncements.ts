@@ -1,6 +1,6 @@
 import { writeFileSync } from "fs"
-import { getDb } from "../db/get"
-import { error } from "../../utils/error"
+import { error } from "@/utils"
+import { getDb } from "../index"
 
 type GroupBy = keyof Exclude<ReturnType<typeof getDb>, undefined>["items"][0]
 

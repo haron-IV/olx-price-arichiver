@@ -1,6 +1,6 @@
 import { readFileSync } from "fs"
-import { ParsedAnnouncements } from "../parseAnnouncements/parseAnnouncements"
-import { error } from "../../utils/error"
+import { error } from "@/utils"
+import { ParsedAnnouncements } from "../index"
 
 interface DB {
   items: ParsedAnnouncements

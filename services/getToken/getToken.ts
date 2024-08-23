@@ -9,10 +9,7 @@ export const getToken = async () => {
     headless: false,
     userDataDir: "./userData",
     args: [`--window-size=1200,900`],
-    defaultViewport: {
-      width: 1200,
-      height: 900,
-    },
+    defaultViewport: { width: 1200, height: 900 },
   })
   const page = await browser.newPage()
   await page.goto("https://olx.pl")

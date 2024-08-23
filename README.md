@@ -1,18 +1,37 @@
-setup:
+## Setup 🛠️
 
-1. pnpm install
-2. pnpm init-app // this step will delete all of your saved data (will create new file)
+1. **Initialize the Project:**
+   ```bash
+   pnpm run-init
+   ```
+2. **Install Dependencies:**
+   ```bash
+   pnpm install
+   ```
+3. **Initialize the Application:**
+   ```bash
+   pnpm init-app
+   ```
+   > **Note:** This step will delete all your saved data (db/data.json) and create a new file.
 
-running:
+## Running the Application 🚀
 
-1. pnpm dev // it will run dev server
-   if there is no access token for olx api it will run browser via puppert
-   if you werent logged in into your olx account in puppeter browser you have to login and reset app (tun pnpm dev)
-   then app will automaticaly can get your token when it expires (it does every few minutes)
-2. it will work :D
-3. in directory ./db you will have 3 files
-   data.json - your entire data
-   data.template.json - template for your data.json file
-   grouppedData.json - your data, but gruppet by configured property
+1. **Start the Development Server:**
 
-in ./userData directory is stored browser data from puppeteer. It has session, cookies, etc.
+   ```bash
+   pnpm dev
+   ```
+
+   - If there's no access token for the OLX API, it will launch a browser via Puppeteer.
+   - If you haven’t logged into your OLX account in the Puppeteer browser, you’ll need to log in and restart the app (`pnpm dev`).
+   - The app will automatically retrieve your token when it expires (which happens every few minutes).
+
+## File Structure 📂
+
+In the `./db` directory, you’ll find:
+
+- `data.json` - Contains all your data.
+- `data.template.json` - A template for the `data.json` file.
+- `groupedData.json` - Your data grouped by a configured property.
+
+In the `./userData` directory, you’ll find browser data from Puppeteer, including session information, cookies, etc.

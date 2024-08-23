@@ -1,7 +1,4 @@
-import { announcedChanged } from "../compareData/compareData"
-import { getDb } from "../db/get"
-import { saveDb } from "../db/set"
-import { ParsedAnnouncements } from "../parseAnnouncements/parseAnnouncements"
+import { announcedChanged, getDb, setDb, type ParsedAnnouncements } from "../index"
 
 export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) => {
   const db = getDb()
@@ -16,7 +13,7 @@ export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) 
       changedEntries.push({ ...newAnnouncement, timestamp: new Date().getTime() })
   })
 
-  // detect changed announcements!
+  // detect changed announcements
   db.items.forEach((oldAnnouncement) => {
     newAnnouncements?.forEach((newAnnouncement) => {
       const isEntryInDb = oldAnnouncement.id === newAnnouncement.id
@@ -35,5 +32,5 @@ export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) 
     changesDetected ? `Detected ${changedEntries.length} changes.` : "Changes not detected",
   )
 
-  if (changesDetected) saveDb(changedEntries)
+  if (changesDetected) setDb(changedEntries)
 }

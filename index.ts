@@ -1,9 +1,11 @@
 import "dotenv/config"
-import { getAnnouncements } from "./services/getAnnouncements/getAnnouncements"
-import { parseAnnouncements } from "./services/parseAnnouncements/parseAnnouncements"
-import { saveChangedAnnouncements } from "./services/saveChangedAnnouncements/saveChangedAnnouncements"
-import { saveGrouppedAnnouncements } from "./services/groupAnnouncements/groupAnnouncements"
-import { getToken } from "./services/getToken/init"
+import {
+  getAnnouncements,
+  getToken,
+  parseAnnouncements,
+  saveChangedAnnouncements,
+  saveGrouppedAnnouncements,
+} from "@/services"
 
 const init = async () => {
   let announcements = await getAnnouncements()
