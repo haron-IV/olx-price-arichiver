@@ -1,16 +1,20 @@
 import { Announcements } from "../getAnnouncements"
 
-export const parseAnnouncements = (announcements?: Announcements) =>
+const safeProperty = (property?: any) => property || ""
+
+export const parseAnnouncements = (announcements: Announcements) =>
   announcements?.data?.map((item) => ({
     id: item.id,
     business: item.business,
-    location: `${item.location.city.name}, ${item.location.district.name}`,
-    map: item.map,
+    location: `${safeProperty(item?.location?.city?.name)}, ${safeProperty(item?.location?.district?.name)}`,
+    map: safeProperty(item.map),
     params: item.params.map((param) => ({
-      name: param.name,
-      value: param.value.label,
+      name: safeProperty(param.name),
+      value: safeProperty(param.value.label),
     })),
     photos: item.photos.map((photo) => photo.link.split("s={")[0]),
-    title: item.title,
-    url: item.url,
+    title: safeProperty(item.title),
+    url: safeProperty(item.url),
   }))
+
+export type ParsedAnnouncements = ReturnType<typeof parseAnnouncements>

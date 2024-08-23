@@ -1,0 +1,1 @@
+cp ./db/data.template.json ./db/data.json

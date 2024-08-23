@@ -1,3 +1,4 @@
+import { error } from "console"
 import { Env, getEnv } from "../../utils/env"
 import { Announcements } from "./getAnnouncements.types"
 
@@ -36,6 +37,6 @@ export const getAnnouncements = async () => {
 
     return (await response.json()) as Announcements
   } catch (err) {
-    console.error("ERROR WHILE FETCHING: ", err)
+    error("ERROR WHILE FETCHING: ", err)
   }
 }
