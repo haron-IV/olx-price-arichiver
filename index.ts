@@ -1,9 +1,8 @@
 import "dotenv/config"
 import { getAnnouncements } from "./services/getAnnouncements/getAnnouncements"
 import { parseAnnouncements } from "./services/parseAnnouncements/parseAnnouncements"
-import { getDb } from "./services/db/get"
-import { saveDb } from "./services/db/set"
 import { saveChangedAnnouncements } from "./services/saveChangedAnnouncements/saveChangedAnnouncements"
+import { groupAnnouncements } from "./services/groupAnnouncements/groupAnnouncements"
 
 const init = async () => {
   const announcements = await getAnnouncements()
@@ -11,6 +10,8 @@ const init = async () => {
   if (!announcements) return
 
   saveChangedAnnouncements(parseAnnouncements(announcements))
+  const grouppedEntries = groupAnnouncements("id")
+  // console.log(grouppedEntries)
 }
 
 init()

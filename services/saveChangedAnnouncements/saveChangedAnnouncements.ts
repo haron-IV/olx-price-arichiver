@@ -1,7 +1,6 @@
 import { announcedChanged } from "../compareData/compareData"
 import { getDb } from "../db/get"
 import { saveDb } from "../db/set"
-import { Announcements } from "../getAnnouncements"
 import { ParsedAnnouncements } from "../parseAnnouncements/parseAnnouncements"
 
 export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) => {
@@ -10,27 +9,31 @@ export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) 
 
   let changedEntries: ParsedAnnouncements = []
 
-  //detect changed announcements
+  //detect new announcements
+  const oldIds = db.items.map(({ id }) => `${id}`)
+  newAnnouncements.forEach((newAnnouncement) => {
+    if (!oldIds.includes(`${newAnnouncement.id}`))
+      changedEntries.push({ ...newAnnouncement, timestamp: new Date().getTime() })
+  })
+
+  // detect changed announcements!
   db.items.forEach((oldAnnouncement) => {
     newAnnouncements?.forEach((newAnnouncement) => {
       const isEntryInDb = oldAnnouncement.id === newAnnouncement.id
 
       if (isEntryInDb && announcedChanged(oldAnnouncement, newAnnouncement))
-        changedEntries = [...changedEntries, newAnnouncement]
+        changedEntries = [
+          ...changedEntries,
+          { ...newAnnouncement, timestamp: new Date().getTime() },
+        ]
     })
   })
 
-  //detect new announcements
-  const oldIds = db.items.map(({ id }) => `${id}`)
-  newAnnouncements.forEach((newAnnouncement) => {
-    if (!oldIds.includes(`${newAnnouncement.id}`)) changedEntries.push(newAnnouncement)
-  })
+  const changesDetected = changedEntries.length > 0
 
   console.log(
-    changedEntries.length > 0
-      ? `Detected ${changedEntries.length} changes`
-      : "Changes not detected",
+    changesDetected ? `Detected ${changedEntries.length} changes.` : "Changes not detected",
   )
 
-  saveDb([...db.items, ...changedEntries])
+  if (changesDetected) saveDb(changedEntries)
 }

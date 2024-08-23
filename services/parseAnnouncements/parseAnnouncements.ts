@@ -1,3 +1,4 @@
+import { timeStamp } from "console"
 import { Announcements } from "../getAnnouncements"
 
 const safeProperty = (property?: any) => property || ""
@@ -15,6 +16,7 @@ export const parseAnnouncements = (announcements: Announcements) =>
     photos: item.photos.map((photo) => photo.link.split("s={")[0]),
     title: safeProperty(item.title),
     url: safeProperty(item.url),
+    timestamp: new Date().getTime(),
   }))
 
 export type ParsedAnnouncements = ReturnType<typeof parseAnnouncements>
