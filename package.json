@@ -23,6 +23,7 @@
     "@types/eslint__js": "^8.42.3",
     "@types/node": "^22.5.0",
     "@types/prettier": "^3.0.0",
+    "@types/puppeteer": "^7.0.4",
     "dotenv": "^16.4.5",
     "eslint": "^9.9.0",
     "eslint-config-prettier": "^9.1.0",
@@ -31,5 +32,8 @@
     "prettier": "^3.3.3",
     "typescript": "^5.5.4",
     "typescript-eslint": "^8.2.0"
+  },
+  "dependencies": {
+    "puppeteer": "^23.1.1"
   }
 }

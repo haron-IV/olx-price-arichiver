@@ -1,14 +1,13 @@
 import { error } from "console"
-import { Env, getEnv } from "../../utils/env"
 import { Announcements } from "./getAnnouncements.types"
 
-export const getAnnouncements = async () => {
+export const getAnnouncements = async (): Promise<Announcements | string | undefined> => {
   try {
     const response = await fetch("https://www.olx.pl/api/v1/users/me/observed-ads/", {
       headers: {
         accept: "*/*",
         "accept-language": "pl",
-        authorization: `Bearer ${getEnv(Env.API_TOKEN)}`,
+        authorization: `Bearer ${process.env.TOKEN}`,
         priority: "u=1, i",
         "sec-ch-ua": '"Not;A=Brand";v="24", "Chromium";v="128"',
         "sec-ch-ua-mobile": "?0",
@@ -35,5 +34,6 @@ export const getAnnouncements = async () => {
     return (await response.json()) as Announcements
   } catch (err) {
     error("ERROR WHILE FETCHING: ", err)
+    if (err && typeof err == "object" && "error" in err) return err.error as string
   }
 }

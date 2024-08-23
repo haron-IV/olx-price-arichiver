@@ -1,6 +1,4 @@
-export enum Env {
-  API_TOKEN = "API_TOKEN",
-}
+export enum Env {}
 
 export const getEnv = (name: Env) => {
   const env = process.env[name]
