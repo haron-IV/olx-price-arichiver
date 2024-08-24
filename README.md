@@ -31,3 +31,13 @@ In the `./db` directory, you’ll find:
 - `groupedData.json` - Your data grouped by a configured property.
 
 In the `./userData` directory, you’ll find browser data from Puppeteer, including session information, cookies, etc.
+
+## Frontend 👨‍💻
+
+To run frontend properly firstly you have to host your `./db` directory in able to fetch the data.
+
+```bash
+   pnpm host-db
+```
+
+It will host `./db` directory on port `:8082`

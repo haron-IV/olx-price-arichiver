@@ -11,7 +11,9 @@ const groupAnnouncements = (groupBy: GroupBy) => {
   const db = getDb()
 
   if (!db?.items) return
-  return Object.groupBy(db?.items, (item) => item[groupBy as keyof typeof item])
+  // TODO: fix typing
+  // @ts-ignore
+  return Object.groupBy(db?.items, (item) => item[groupBy])
 }
 
 export const saveGrouppedAnnouncements = () => {
@@ -23,3 +25,5 @@ export const saveGrouppedAnnouncements = () => {
     error("Something went wrong during saving groupped data")
   }
 }
+
+export type GrouppedAnnouncements = ReturnType<typeof groupAnnouncements>

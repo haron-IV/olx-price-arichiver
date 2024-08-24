@@ -2,7 +2,7 @@
   "name": "olx-price-archiver",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "engines": {
     "node": "v22.7.0"
   },
@@ -10,7 +10,8 @@
     "dev": "nodemon",
     "lint": "eslint",
     "run-init": "ts-patch install -s",
-    "app-init": "sh ./scripts/init-app.sh && pnpm run-init"
+    "app-init": "sh ./scripts/init-app.sh && pnpm run-init",
+    "host-db": "node ./host-db.js"
   },
   "keywords": [],
   "author": "Norah C. IV",
@@ -37,6 +38,7 @@
     "typescript-transform-paths": "^3.5.0"
   },
   "dependencies": {
+    "live-server": "^1.2.2",
     "node-notifier": "^10.0.1",
     "puppeteer": "^23.1.1"
   }

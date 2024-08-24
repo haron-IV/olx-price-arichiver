@@ -2,7 +2,7 @@ import { readFileSync } from "fs"
 import { error } from "@/utils"
 import { ParsedAnnouncements } from "../index"
 
-interface DB {
+export interface DB {
   items: ParsedAnnouncements
 }
 
