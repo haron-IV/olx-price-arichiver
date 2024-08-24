@@ -13,16 +13,19 @@ export const getToken = async () => {
   })
   const page = await browser.newPage()
   await page.goto("https://olx.pl")
+  await page.reload({ waitUntil: "domcontentloaded" })
+
   const cookies = await page.cookies()
   const accessToken = cookies.find(({ name }) => name === "access_token")
 
   process.env.TOKEN = accessToken?.value // set token to env
 
-  if (accessToken?.value === undefined) {
+  if (!process.env.TOKEN) {
     nc.notify(
       {
         title: "ACTION NEEDED",
-        message: "Browser showed. You have to log into your account to get token",
+        message:
+          "Browser showed. You have to log into your account to get token",
         icon: path.join(process.cwd(), "alert_icon.png"),
         sound: "",
         actions: "ok",

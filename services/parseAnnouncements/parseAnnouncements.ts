@@ -1,6 +1,6 @@
 import type { Announcements } from "../index"
 
-const safeProperty = (property?: any) => property || ""
+const safeProperty = (property?: unknown) => property || ""
 
 export const parseAnnouncements = (announcements: Announcements) =>
   announcements?.data?.map((item) => ({

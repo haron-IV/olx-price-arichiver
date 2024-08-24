@@ -130,7 +130,7 @@ interface Safedeal {
   weight_grams: number
   status: string
   safedeal_blocked: boolean
-  allowed_quantity: any[]
+  allowed_quantity: unknown[]
 }
 
 interface Shop {
@@ -168,5 +168,5 @@ interface First {
 
 interface Metadata {
   total_elements: number
-  promoted: any[]
+  promoted: unknown[]
 }

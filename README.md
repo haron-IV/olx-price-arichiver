@@ -1,16 +1,12 @@
 ## Setup 🛠️
 
-1. **Initialize the Project:**
-   ```bash
-   pnpm run-init
-   ```
-2. **Install Dependencies:**
+1. **Install Dependencies:**
    ```bash
    pnpm install
    ```
-3. **Initialize the Application:**
+2. **Initialize the Application:**
    ```bash
-   pnpm init-app
+   pnpm app-init
    ```
    > **Note:** This step will delete all your saved data (db/data.json) and create a new file.
 
