@@ -2,7 +2,6 @@ import {
   announcedChanged,
   getDb,
   setDb,
-  saveGrouppedAnnouncements,
   type ParsedAnnouncements,
 } from "../index"
 
@@ -47,5 +46,4 @@ export const saveChangedAnnouncements = (
 
   if (!changesDetected) return
   setDb(changedEntries)
-  saveGrouppedAnnouncements()
 }

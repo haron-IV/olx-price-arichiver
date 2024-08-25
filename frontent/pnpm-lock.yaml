@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@types/antd':
-        specifier: ^1.0.0
-        version: 1.0.0(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd:
         specifier: ^5.20.2
         version: 5.20.2(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1353,10 +1350,6 @@ packages:
   '@trysound/sax@0.2.0':
     resolution: {integrity: sha512-L7z9BgrNEcYyUYtF+HaEfiS5ebkh9jXqbszz7pC0hRBPaatV0XjSD3+eHrpqFemQfgwiFF0QPIarnIihIDn7OA==}
     engines: {node: '>=10.13.0'}
-
-  '@types/antd@1.0.0':
-    resolution: {integrity: sha512-wnRh+S6vPMahsuSN6lFJQzNXuhUKr9JKic1L/NMdIChsuu9Fc+mDyF7H17eFPQlgpLVdT0DyYIgB1di8DA9AuQ==}
-    deprecated: This is a stub types definition for antd (https://github.com/ant-design/ant-design). antd provides its own type definitions, so you don't need @types/antd installed!
 
   '@types/aria-query@5.0.4':
     resolution: {integrity: sha512-rfT93uj5s0PRL7EzccGMs3brplhcrghnDoV26NqKhCAS1hVo+WdNsPvE/yb6ilfr5hi2MEk6d5EWJTKdxg8jVw==}
@@ -7920,16 +7913,6 @@ snapshots:
   '@tootallnate/once@1.1.2': {}
 
   '@trysound/sax@0.2.0': {}
-
-  '@types/antd@1.0.0(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
-    dependencies:
-      antd: 5.20.2(moment@2.30.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-    transitivePeerDependencies:
-      - date-fns
-      - luxon
-      - moment
-      - react
-      - react-dom
 
   '@types/aria-query@5.0.4': {}
 
