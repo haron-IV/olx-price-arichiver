@@ -17,7 +17,7 @@ interface MapProps {
 const Map = ({ points }: MapProps) => {
   const mapContainer = useRef<HTMLDivElement | null>(null)
   const map = useRef<maptilersdk.Map | null>(null)
-  maptilersdk.config.apiKey = "3nxb8gcNpK0TnrN3ut91"
+  maptilersdk.config.apiKey = process.env.REACT_APP_MAP_API_KEY || ""
 
   useEffect(() => {
     if (map.current) return // stops map from intializing more than once
