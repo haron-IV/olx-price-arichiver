@@ -11,9 +11,8 @@ const groupAnnouncements = (groupBy: GroupBy) => {
   const db = getDb()
 
   if (!db?.items) return
-  // TODO: fix typing
-  // @ts-ignore
-  return Object.groupBy(db?.items, (item) => item[groupBy])
+
+  return Object.groupBy(db?.items, (item) => `${item[groupBy]}`)
 }
 
 export const saveGrouppedAnnouncements = () => {
