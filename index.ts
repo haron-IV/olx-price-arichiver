@@ -4,7 +4,6 @@ import {
   getToken,
   parseAnnouncements,
   saveChangedAnnouncements,
-  saveGrouppedAnnouncements,
 } from "@/services"
 
 const init = async () => {
@@ -19,7 +18,6 @@ const init = async () => {
   if (!announcements || typeof announcements === "string") return
 
   saveChangedAnnouncements(parseAnnouncements(announcements))
-  saveGrouppedAnnouncements()
 }
 
 init()

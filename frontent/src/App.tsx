@@ -1,8 +1,6 @@
 import { Flex, Layout } from "antd"
-import "./App.css"
-import { fetchData } from "./utils"
 import { useEffect, useState } from "react"
-import { DB, GrouppedAnnouncements } from "../../services"
+import { GrouppedAnnouncements } from "../../services"
 import EstateCard from "./components/EstateCard"
 import { fetchGrouppedData } from "./utils/fetch-data"
 
