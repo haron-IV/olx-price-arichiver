@@ -34,10 +34,4 @@ In the `./userData` directory, you’ll find browser data from Puppeteer, includ
 
 ## Frontend 👨‍💻
 
-To run frontend properly firstly you have to host your `./db` directory in able to fetch the data.
-
-```bash
-   pnpm host-db
-```
-
-It will host `./db` directory on port `:8082`
+To run frontend properly firstly you have to run the API in order to do it you can run the applicartion by dev mode `pnpm dev`.

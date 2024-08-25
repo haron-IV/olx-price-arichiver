@@ -5,6 +5,7 @@ import {
   parseAnnouncements,
   saveChangedAnnouncements,
 } from "@/services"
+import { initApi } from "./api"
 
 const init = async () => {
   if (!process.env.TOKEN) await getToken()
@@ -15,9 +16,11 @@ const init = async () => {
     announcements = await getAnnouncements()
   }
 
-  if (!announcements || typeof announcements === "string") return
+  if (!announcements || typeof announcements === "string")
+    throw "invalid token try to change it manually"
 
   saveChangedAnnouncements(parseAnnouncements(announcements))
 }
 
-init()
+// init()
+initApi()

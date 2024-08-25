@@ -21,17 +21,16 @@ function App() {
       <Layout>
         <Flex wrap justify="space-between" gap="middle">
           {data &&
-            Object.entries(data)?.map(([key, entries]) => (
+            Object.entries(data)?.map(([key, items]) => (
               <EstateCard
                 key={key}
-                thumbnail={entries?.[0].photos[0] || ""}
-                title={entries?.[0].title || ""}
-                privateEstate={!entries?.[0].business}
+                thumbnail={items?.[0].photos[0] || ""}
+                title={items?.[0].title || ""}
+                privateEstate={!items?.[0].business}
                 price={
-                  entries?.[0].params.find((p) => p.name === "Cena")?.value ||
-                  ""
+                  items?.[0].params.find((p) => p.name === "Cena")?.value || ""
                 }
-                lastUpdate={new Date(entries?.[0].timestamp || 0).toUTCString()}
+                lastUpdate={new Date(items?.[0].timestamp || 0).toUTCString()}
               />
             ))}
         </Flex>

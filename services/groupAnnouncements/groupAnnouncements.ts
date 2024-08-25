@@ -1,4 +1,4 @@
-import { writeFileSync } from "fs"
+import { readFileSync, writeFileSync } from "fs"
 import { error } from "@/utils"
 import { getDb } from "../index"
 
@@ -23,6 +23,14 @@ export const saveGrouppedAnnouncements = () => {
     writeFileSync("./db/grouppedData.json", JSON.stringify(groupped))
   } catch {
     error("Something went wrong during saving groupped data")
+  }
+}
+
+export const getGrouppedAnnouncements = () => {
+  try {
+    return JSON.parse(readFileSync("./db/grouppedData.json").toString("utf8"))
+  } catch {
+    error("Something wen wrong while fetching grouppedData")
   }
 }
 

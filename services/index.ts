@@ -9,7 +9,10 @@ export type { Announcements } from "./getAnnouncements/getAnnouncements.types"
 
 export { getToken } from "./getToken/getToken"
 
-export { saveGrouppedAnnouncements } from "./groupAnnouncements/groupAnnouncements"
+export {
+  saveGrouppedAnnouncements,
+  getGrouppedAnnouncements,
+} from "./groupAnnouncements/groupAnnouncements"
 export type { GrouppedAnnouncements } from "./groupAnnouncements/groupAnnouncements"
 
 export { parseAnnouncements } from "./parseAnnouncements/parseAnnouncements"
