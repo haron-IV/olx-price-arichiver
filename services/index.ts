@@ -12,6 +12,7 @@ export { getToken } from "./getToken/getToken"
 export {
   saveGrouppedAnnouncements,
   getGrouppedAnnouncements,
+  getGrouppedAnnouncement,
 } from "./groupAnnouncements/groupAnnouncements"
 export type { GrouppedAnnouncements } from "./groupAnnouncements/groupAnnouncements"
 

@@ -22,5 +22,5 @@ const init = async () => {
   saveChangedAnnouncements(parseAnnouncements(announcements))
 }
 
-init()
+// init()
 initApi()

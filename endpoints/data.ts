@@ -1,5 +1,9 @@
 import express from "express"
-import { getDb, getGrouppedAnnouncements } from "@/services"
+import {
+  getDb,
+  getGrouppedAnnouncement,
+  getGrouppedAnnouncements,
+} from "@/services"
 
 const dataRouter = express.Router()
 
@@ -9,6 +13,10 @@ dataRouter.get("/archive", (req, res) => {
 
 dataRouter.get("/grouppedData", (req, res) => {
   res.send(getGrouppedAnnouncements())
+})
+
+dataRouter.get("/grouppedData/:id", (req, res) => {
+  res.send(getGrouppedAnnouncement(req.params.id))
 })
 
 export default dataRouter

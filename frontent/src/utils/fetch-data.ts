@@ -21,3 +21,18 @@ export const fetchGrouppedData = async (): Promise<GrouppedAnnouncements> => {
     )
   }
 }
+
+export const fetchGrouppedDataItem = async (id?: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:8083/data/grouppedData/${id}`,
+    )
+    return response.json() as Promise<
+      Exclude<GrouppedAnnouncements, undefined>[0]
+    >
+  } catch {
+    console.error(
+      "Somethig went wroing during data fetching - make sure you host your dbs (pnpm host-db)",
+    )
+  }
+}

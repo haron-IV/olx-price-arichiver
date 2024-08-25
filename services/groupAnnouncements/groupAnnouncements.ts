@@ -33,4 +33,14 @@ export const getGrouppedAnnouncements = () => {
   }
 }
 
+export const getGrouppedAnnouncement = (id: string) => {
+  try {
+    return JSON.parse(readFileSync("./db/grouppedData.json").toString("utf8"))[
+      id
+    ]
+  } catch {
+    error("Something wen wrong while fetching grouppedData")
+  }
+}
+
 export type GrouppedAnnouncements = ReturnType<typeof groupAnnouncements>
