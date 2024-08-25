@@ -1,4 +1,3 @@
-import { readFileSync, writeFileSync } from "fs"
 import { error } from "@/utils"
 import { getDb } from "../index"
 
@@ -7,7 +6,10 @@ type GroupBy = keyof Exclude<ReturnType<typeof getDb>, undefined>["items"][0]
 /** Groupping announcements by properties
  * @param groupBy name of object key it will group by
  */
-const groupAnnouncements = (groupBy: GroupBy, notArchived: boolean = true) => {
+export const groupAnnouncements = (
+  groupBy: GroupBy,
+  notArchived: boolean = true,
+) => {
   const db = getDb()
 
   if (!db?.items) return
@@ -17,29 +19,9 @@ const groupAnnouncements = (groupBy: GroupBy, notArchived: boolean = true) => {
   return Object.groupBy(db?.items, (item) => `${item[groupBy]}`)
 }
 
-export const saveGrouppedAnnouncements = () => {
-  const groupped = groupAnnouncements("id")
-
-  try {
-    writeFileSync("./db/grouppedData.json", JSON.stringify(groupped))
-  } catch {
-    error("Something went wrong during saving groupped data")
-  }
-}
-
-export const getGrouppedAnnouncements = () => {
-  try {
-    return JSON.parse(readFileSync("./db/grouppedData.json").toString("utf8"))
-  } catch {
-    error("Something wen wrong while fetching grouppedData")
-  }
-}
-
 export const getGrouppedAnnouncement = (id: string) => {
   try {
-    return JSON.parse(readFileSync("./db/grouppedData.json").toString("utf8"))[
-      id
-    ]
+    return groupAnnouncements("id")?.[id]
   } catch {
     error("Something wen wrong while fetching grouppedData")
   }

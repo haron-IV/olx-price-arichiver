@@ -1,4 +1,4 @@
-import { getDb, saveGrouppedAnnouncements, setDb } from "../index"
+import { getDb, setDb } from "../index"
 
 export const archiveOffer = (offerId: string) => {
   const db = getDb()
@@ -7,9 +7,8 @@ export const archiveOffer = (offerId: string) => {
 
   db.items = db?.items.map((item) => ({
     ...item,
-    archived: `${item.id}` === offerId,
+    archived: item.archived || `${item.id}` === offerId,
   }))
 
   setDb(db, true)
-  saveGrouppedAnnouncements()
 }

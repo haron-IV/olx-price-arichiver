@@ -6,6 +6,7 @@
     "node": "v22.7.0"
   },
   "dependencies": {
+    "@maptiler/sdk": "^2.2.2",
     "@types/recharts": "^1.8.29",
     "antd": "^5.20.2",
     "react": "^18.3.1",

@@ -10,10 +10,8 @@ export type { Announcements } from "./getAnnouncements/getAnnouncements.types"
 export { getToken } from "./getToken/getToken"
 
 export {
-  saveGrouppedAnnouncements,
-  getGrouppedAnnouncements,
+  groupAnnouncements,
   getGrouppedAnnouncement,
-  removeItem,
 } from "./groupAnnouncements/groupAnnouncements"
 export type { GrouppedAnnouncements } from "./groupAnnouncements/groupAnnouncements"
 

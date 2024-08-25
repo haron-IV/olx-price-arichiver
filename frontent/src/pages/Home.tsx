@@ -7,6 +7,7 @@ import EstateCard from "../components/EstateCard"
 
 const Home = () => {
   const [data, setData] = useState<GrouppedAnnouncements>()
+  const [refresh, seRefresh] = useState(0)
 
   useEffect(() => {
     const getData = async () => {
@@ -15,7 +16,8 @@ const Home = () => {
     }
 
     getData()
-  }, [])
+  }, [refresh])
+
   const entries = (data && Object.entries(data)) || []
   type Entries = (typeof entries)[0][1]
   const dataEntries = entries.map(([key, entries]: [string, Entries]) => {
@@ -44,6 +46,7 @@ const Home = () => {
                 oldestPrice={
                   oldestItem.params.find((p) => p.name === "Cena")?.value || ""
                 }
+                setRefresh={seRefresh}
               />
             )
           })}

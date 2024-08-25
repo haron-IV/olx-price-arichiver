@@ -1,5 +1,5 @@
 import { Button, Card, Divider, Flex, Image, Tag, Typography } from "antd"
-import { PropsWithChildren } from "react"
+import { Dispatch, PropsWithChildren, SetStateAction } from "react"
 import { styled } from "styled-components"
 import { Link, generatePath } from "react-router-dom"
 import { paths } from "../router"
@@ -21,6 +21,8 @@ interface EstateCardProps extends PropsWithChildren {
   price: string
   lastUpdate: string
   oldestPrice: string
+  /** random number to refresh parent data */
+  setRefresh: Dispatch<SetStateAction<number>>
 }
 const EstateCard = ({
   id,
@@ -30,9 +32,15 @@ const EstateCard = ({
   price,
   lastUpdate,
   oldestPrice,
+  setRefresh,
 }: EstateCardProps) => {
   const noPriceChange = oldestPrice === price
   const priceChange = clearPrice(price) - clearPrice(oldestPrice)
+
+  const handleArchiveOffer = async () => {
+    const data = await archiveOffer(id)
+    if (data) setRefresh(Math.random())
+  }
 
   return (
     <Link to={generatePath(paths.offer, { offerId: id, priceChange })}>
@@ -77,7 +85,7 @@ const EstateCard = ({
                 size="small"
                 onClick={(e) => {
                   e.preventDefault()
-                  archiveOffer(id)
+                  handleArchiveOffer()
                 }}
               >
                 Archive

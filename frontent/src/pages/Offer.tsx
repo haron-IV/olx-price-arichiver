@@ -4,6 +4,7 @@ import { fetchGrouppedDataItem } from "../utils/fetch-data"
 import { clearPrice, sortNewestFirst } from "../utils"
 import { Carousel, Divider, Flex, Tag, Typography } from "antd"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts"
+import { default as Map } from "../components/Map"
 import styled from "styled-components"
 
 type Data = Awaited<ReturnType<typeof fetchGrouppedDataItem> | undefined>
@@ -59,23 +60,31 @@ const Offer = () => {
             </Tag>
           ))}
         </Flex>
-
-        <LineChart
-          width={500}
-          height={350}
-          data={prices}
-          style={{ margin: "20px" }}
-        >
-          <Line
-            type="monotone"
-            dataKey="price"
-            stroke={Number(priceChange) < 0 ? "green" : "red"}
-          />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-        </LineChart>
+        <Flex>
+          <LineChart
+            width={500}
+            height={350}
+            data={prices}
+            style={{ margin: "20px" }}
+          >
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke={Number(priceChange) < 0 ? "green" : "red"}
+            />
+            <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+          </LineChart>
+          <div style={{ width: 500, height: 350 }}>
+            <Map
+              points={[
+                { lng: data?.[0].map.lon || 0, lat: data?.[0].map.lat || 0 },
+              ]}
+            />
+          </div>
+        </Flex>
       </div>
     </>
   )
