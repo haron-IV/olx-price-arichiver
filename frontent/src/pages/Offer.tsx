@@ -42,7 +42,7 @@ const Offer = () => {
 
   return (
     <>
-      <Carousel arrows style={{ minHeight: 300 }}>
+      <Carousel arrows autoplay style={{ minHeight: 300 }}>
         {data?.[0].photos.map((url) => <Slide key={url} src={url} />)}
       </Carousel>
 
@@ -54,7 +54,7 @@ const Offer = () => {
 
         <Flex wrap gap="small" style={{ marginTop: 25 }}>
           {data?.[0].params.map(({ name, value }) => (
-            <Tag>
+            <Tag color={name === "Cena" ? "blue" : "default"}>
               <b>{name}:</b> {value}
             </Tag>
           ))}

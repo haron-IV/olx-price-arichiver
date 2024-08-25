@@ -1,5 +1,6 @@
 import express from "express"
 import {
+  archiveOffer,
   getDb,
   getGrouppedAnnouncement,
   getGrouppedAnnouncements,
@@ -17,6 +18,11 @@ dataRouter.get("/grouppedData", (req, res) => {
 
 dataRouter.get("/grouppedData/:id", (req, res) => {
   res.send(getGrouppedAnnouncement(req.params.id))
+})
+
+dataRouter.delete("/grouppedData/:id/archive", (req, res) => {
+  archiveOffer(req.params.id)
+  res.status(200)
 })
 
 export default dataRouter

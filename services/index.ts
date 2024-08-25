@@ -13,6 +13,7 @@ export {
   saveGrouppedAnnouncements,
   getGrouppedAnnouncements,
   getGrouppedAnnouncement,
+  removeItem,
 } from "./groupAnnouncements/groupAnnouncements"
 export type { GrouppedAnnouncements } from "./groupAnnouncements/groupAnnouncements"
 
@@ -23,3 +24,5 @@ export type {
 } from "./parseAnnouncements/parseAnnouncements"
 
 export { saveChangedAnnouncements } from "./saveChangedAnnouncements/saveChangedAnnouncements"
+
+export { archiveOffer } from "./archive/archive"

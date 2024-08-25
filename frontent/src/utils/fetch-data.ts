@@ -5,9 +5,7 @@ export const fetchData = async () => {
     const response = await fetch("http://localhost:8083/data/archive")
     return response.json() as Promise<DB>
   } catch {
-    console.error(
-      "Somethig went wroing during data fetching - make sure you host your dbs (pnpm host-db)",
-    )
+    console.error("Somethig went wroing during data fetching ")
   }
 }
 
@@ -16,9 +14,7 @@ export const fetchGrouppedData = async (): Promise<GrouppedAnnouncements> => {
     const response = await fetch("http://localhost:8083/data/grouppedData")
     return response.json() as Promise<GrouppedAnnouncements>
   } catch {
-    console.error(
-      "Somethig went wroing during data fetching - make sure you host your dbs (pnpm host-db)",
-    )
+    console.error("Somethig went wroing during data fetching")
   }
 }
 
@@ -31,8 +27,18 @@ export const fetchGrouppedDataItem = async (id?: string) => {
       Exclude<GrouppedAnnouncements, undefined>[0]
     >
   } catch {
-    console.error(
-      "Somethig went wroing during data fetching - make sure you host your dbs (pnpm host-db)",
+    console.error("Somethig went wroing during data fetching ")
+  }
+}
+
+export const archiveOffer = async (offerId: string) => {
+  try {
+    const response = await fetch(
+      `http://localhost:8083/data/grouppedData/${offerId}/archive`,
+      { method: "delete" },
     )
+    return response.json()
+  } catch {
+    console.error("Somethig went wroing during archiving data")
   }
 }

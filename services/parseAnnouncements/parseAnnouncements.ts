@@ -16,6 +16,7 @@ export const parseAnnouncements = (announcements: Announcements) =>
     photos: item.photos.map((photo) => photo.link.split("s={")[0]),
     url: safeProperty(item.url),
     timestamp: new Date().getTime(),
+    archived: false,
   }))
 
 export type ParsedAnnouncements = ReturnType<typeof parseAnnouncements>

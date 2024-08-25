@@ -1,9 +1,10 @@
-import { Card, Flex, Image, Tag, Typography } from "antd"
+import { Button, Card, Divider, Flex, Image, Tag, Typography } from "antd"
 import { PropsWithChildren } from "react"
 import { styled } from "styled-components"
 import { Link, generatePath } from "react-router-dom"
 import { paths } from "../router"
 import { clearPrice } from "../utils"
+import { archiveOffer } from "../utils/fetch-data"
 
 const StyledCard = styled(Card)({
   ".ant-card-meta-title": { fontSize: 10 },
@@ -69,6 +70,18 @@ const EstateCard = ({
                   <b>Last update:</b> {lastUpdate}
                 </Tag>
               </Flex>
+              <Divider variant="dotted" style={{ margin: "10px 0" }} />
+              <Button
+                ghost
+                type="primary"
+                size="small"
+                onClick={(e) => {
+                  e.preventDefault()
+                  archiveOffer(id)
+                }}
+              >
+                Archive
+              </Button>
             </>
           }
         />
