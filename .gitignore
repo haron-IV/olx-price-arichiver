@@ -4,3 +4,4 @@
 /db/*
 !/db/data.template.json
 /userData
+/logs/*

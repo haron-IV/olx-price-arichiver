@@ -7,7 +7,7 @@ import {
 } from "@/services"
 import { initApi } from "./api"
 
-const init = async () => {
+const init = async (server: Server) => {
   if (!process.env.TOKEN) await getToken()
   let announcements = await getAnnouncements()
 
@@ -20,7 +20,9 @@ const init = async () => {
     throw "invalid token try to change it manually"
 
   saveChangedAnnouncements(parseAnnouncements(announcements))
+  server.close()
 }
 
-init()
-initApi()
+const { server } = initApi()
+type Server = typeof server
+init(server)

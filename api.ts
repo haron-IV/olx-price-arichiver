@@ -10,7 +10,9 @@ export const initApi = () => {
   app.use("/data", dataRouter)
 
   const port = getEnv(Env.API_PORT)
-  app.listen(port, () => {
+  const server = app.listen(port, () => {
     console.log(`API is running on port ${port}`)
   })
+
+  return { server }
 }

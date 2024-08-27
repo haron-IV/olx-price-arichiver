@@ -11,7 +11,8 @@
     "lint": "eslint",
     "run-init": "ts-patch install -s",
     "app-init": "sh ./scripts/init-app.sh && pnpm run-init",
-    "host-db": "node ./host-db.js"
+    "host-db": "node ./host-db.js",
+    "start": "ts-node ./index.ts >> ./logs/logs.log"
   },
   "keywords": [],
   "author": "Norah C. IV",
