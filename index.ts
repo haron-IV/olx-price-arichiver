@@ -7,6 +7,14 @@ import {
 } from "@/services"
 import { initApi } from "./api"
 
+const originalConsoleLog = console.log
+
+console.log = (...args: unknown[]) => {
+  const date = new Date().toUTCString()
+
+  return originalConsoleLog(`[${date}]`, ...args)
+}
+
 const init = async (server: Server) => {
   if (!process.env.TOKEN) await getToken()
   let announcements = await getAnnouncements()
