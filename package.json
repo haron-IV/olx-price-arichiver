@@ -8,6 +8,8 @@
   },
   "scripts": {
     "dev": "nodemon",
+    "dev-api": "nodemon --dev api",
+    "dev-app": "nodemon --dev app",
     "lint": "eslint",
     "run-init": "ts-patch install -s",
     "app-init": "sh ./scripts/init-app.sh && pnpm run-init",
@@ -22,6 +24,7 @@
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^4.17.21",
+    "@types/minimist": "^1.2.5",
     "@types/node": "^22.5.0",
     "@types/node-notifier": "^8.0.5",
     "@types/puppeteer": "^7.0.4",
@@ -43,6 +46,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.19.2",
+    "minimist": "^1.2.8",
     "node-notifier": "^10.0.1",
     "puppeteer": "^23.1.1"
   }

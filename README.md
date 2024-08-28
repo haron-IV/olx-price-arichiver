@@ -35,14 +35,3 @@ In the `./userData` directory, you’ll find browser data from Puppeteer, includ
 ## Frontend 👨‍💻
 
 To run frontend properly firstly you have to run the API in order to do it you can run the applicartion by dev mode `pnpm dev`.
-
-## TODO 🏗️
-
-❌ - not done
-✅ - done
-
-✅ replace everythig regarding group announcements savings. Saving the data to extendal .json file. Everything should be stored in sidgle data.json file.
-
-❌ add confirmation to archive button
-
-❌ archive page (frontend, endpoints)

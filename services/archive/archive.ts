@@ -10,5 +10,7 @@ export const archiveOffer = (offerId: string) => {
     archived: item.archived || `${item.id}` === offerId,
   }))
 
+  db.archivedIds.push(offerId)
+
   setDb(db, true)
 }

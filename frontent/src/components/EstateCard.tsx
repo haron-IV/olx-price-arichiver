@@ -38,6 +38,8 @@ const EstateCard = ({
   const priceChange = clearPrice(price) - clearPrice(oldestPrice)
 
   const handleArchiveOffer = async () => {
+    const answer = window.confirm("Are you sure you want to archive this offer?")
+    if (!answer) return
     const data = await archiveOffer(id)
     if (data) setRefresh(Math.random())
   }

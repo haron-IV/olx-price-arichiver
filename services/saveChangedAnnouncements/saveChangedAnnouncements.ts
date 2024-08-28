@@ -1,13 +1,6 @@
-import {
-  announcedChanged,
-  getDb,
-  setDb,
-  type ParsedAnnouncements,
-} from "../index"
+import { announcedChanged, getDb, setDb, type ParsedAnnouncements } from "../index"
 
-export const saveChangedAnnouncements = (
-  newAnnouncements: ParsedAnnouncements,
-) => {
+export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) => {
   const db = getDb()
   if (!db?.items) return
 
@@ -16,11 +9,12 @@ export const saveChangedAnnouncements = (
   //detect new announcements
   const oldIds = db.items.map(({ id }) => `${id}`)
   newAnnouncements.forEach((newAnnouncement) => {
-    if (!oldIds.includes(`${newAnnouncement.id}`))
-      changedEntries.push({
-        ...newAnnouncement,
-        timestamp: new Date().getTime(),
-      })
+    if (
+      oldIds.includes(`${newAnnouncement.id}`) ||
+      db.archivedIds.includes(`${newAnnouncement.id}`)
+    )
+      return
+    changedEntries.push({ ...newAnnouncement, timestamp: new Date().getTime() })
   })
 
   // detect changed announcements
@@ -39,9 +33,7 @@ export const saveChangedAnnouncements = (
   const changesDetected = changedEntries.length > 0
 
   console.log(
-    changesDetected
-      ? `Detected ${changedEntries.length} changes.`
-      : "Changes not detected",
+    changesDetected ? `Detected ${changedEntries.length} changes.` : "Changes not detected",
   )
 
   if (!changesDetected) return

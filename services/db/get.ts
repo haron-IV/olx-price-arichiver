@@ -4,6 +4,7 @@ import { ParsedAnnouncements } from "../index"
 
 export interface DB {
   items: ParsedAnnouncements
+  archivedIds: string[]
 }
 
 export const getDb = (): DB | undefined => {

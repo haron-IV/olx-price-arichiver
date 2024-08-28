@@ -6,6 +6,14 @@ import {
   saveChangedAnnouncements,
 } from "@/services"
 import { initApi } from "./api"
+import minimist from "minimist"
+import type { Server } from "http"
+
+enum Flag {
+  Dev = "dev",
+}
+
+const args = minimist(process.argv.slice(2))
 
 const originalConsoleLog = console.log
 
@@ -15,7 +23,7 @@ console.log = (...args: unknown[]) => {
   return originalConsoleLog(`[${date}]`, ...args)
 }
 
-const init = async (server: Server) => {
+const init = async (server?: Server) => {
   if (!process.env.TOKEN) await getToken()
   let announcements = await getAnnouncements()
 
@@ -28,9 +36,19 @@ const init = async (server: Server) => {
     throw "invalid token try to change it manually"
 
   saveChangedAnnouncements(parseAnnouncements(announcements))
-  server.close()
+  server?.close()
 }
 
-const { server } = initApi()
-type Server = typeof server
-init(server)
+switch (args[Flag.Dev]) {
+  case "all":
+  default: {
+    const { server } = initApi()
+    init(server)
+    break
+  }
+  case "api":
+    initApi()
+    break
+  case "app":
+    init()
+}
