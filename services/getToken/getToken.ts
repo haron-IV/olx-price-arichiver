@@ -12,7 +12,8 @@ export const getToken = async () => {
     defaultViewport: { width: 1200, height: 900 },
   })
   const page = await browser.newPage()
-  await page.goto("https://olx.pl")
+  await page.goto("https://olx.pl", { waitUntil: "domcontentloaded" })
+  await page.deleteCookie({ name: "access_token" })
   await page.reload({ waitUntil: "domcontentloaded" })
 
   const cookies = await page.cookies()
@@ -24,8 +25,7 @@ export const getToken = async () => {
     nc.notify(
       {
         title: "ACTION NEEDED",
-        message:
-          "Browser showed. You have to log into your account to get token",
+        message: "Browser showed. You have to log into your account to get token",
         icon: path.join(process.cwd(), "alert_icon.png"),
         sound: "",
         actions: "ok",

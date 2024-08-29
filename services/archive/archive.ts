@@ -1,5 +1,7 @@
+import { groupBy } from "@/utils"
 import { getDb, setDb } from "../index"
 
+/** @description Archives the offer */
 export const archiveOffer = (offerId: string) => {
   const db = getDb()
 
@@ -14,3 +16,15 @@ export const archiveOffer = (offerId: string) => {
 
   setDb(db, true)
 }
+
+export const getArchive = (groupped: boolean = true) => {
+  const db = getDb()
+
+  const archivedItems = db?.items.filter((item) => item.archived)
+
+  if (!archivedItems) return []
+
+  return groupped ? groupBy(archivedItems, "id") : archivedItems
+}
+
+export type Archive = ReturnType<typeof getArchive>
