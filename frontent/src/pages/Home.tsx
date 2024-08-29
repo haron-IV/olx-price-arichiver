@@ -4,6 +4,7 @@ import { fetchGrouppedData } from "../utils/fetch-data"
 import { isDefined, sortNewestFirst } from "../utils"
 import { Flex, Layout } from "antd"
 import EstateCard from "../components/EstateCard"
+import { paths } from "src/router"
 
 const Home = () => {
   const [data, setData] = useState<GrouppedAnnouncements>()
@@ -39,14 +40,11 @@ const Home = () => {
                 thumbnail={oldestItem.photos[0] || ""} // oldest photo to have consistency in displayed UI
                 title={sorted[0].title || ""}
                 privateEstate={!sorted[0].business}
-                price={
-                  sorted[0].params.find((p) => p.name === "Cena")?.value || ""
-                }
+                price={sorted[0].params.find((p) => p.name === "Cena")?.value || ""}
                 lastUpdate={new Date(sorted[0].timestamp || 0).toUTCString()}
-                oldestPrice={
-                  oldestItem.params.find((p) => p.name === "Cena")?.value || ""
-                }
+                oldestPrice={oldestItem.params.find((p) => p.name === "Cena")?.value || ""}
                 setRefresh={seRefresh}
+                redirectionPath={paths.offer}
               />
             )
           })}

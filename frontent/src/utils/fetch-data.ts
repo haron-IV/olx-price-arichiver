@@ -1,5 +1,4 @@
 import type { DB, GrouppedAnnouncements } from "../../../services"
-import { Archive } from "../../../services/archive/archive"
 
 const API_URL = process.env.REACT_APP_API_URL
 
@@ -47,5 +46,14 @@ export const getArchive = async (groupped: boolean = true): Promise<GrouppedAnno
     return response.json() as Promise<GrouppedAnnouncements>
   } catch {
     console.error("Somethig went wroing during archiving data")
+  }
+}
+
+export const fetchArchivedDataItem = async (id?: string) => {
+  try {
+    const response = await fetch(`${API_URL}/archive/${id}`)
+    return response.json() as Promise<Exclude<GrouppedAnnouncements, undefined>[0]>
+  } catch {
+    console.error("Somethig went wroing during data fetching ")
   }
 }

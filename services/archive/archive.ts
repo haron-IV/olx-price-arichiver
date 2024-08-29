@@ -28,3 +28,5 @@ export const getArchive = (groupped: boolean = true) => {
 }
 
 export type Archive = ReturnType<typeof getArchive>
+export const isGroupped = (archive: Archive): archive is ReturnType<typeof groupBy> =>
+  typeof archive === "object" && !Array.isArray(archive)

@@ -22,7 +22,8 @@ interface EstateCardProps extends PropsWithChildren {
   lastUpdate: string
   oldestPrice: string
   /** random number to refresh parent data */
-  setRefresh: Dispatch<SetStateAction<number>>
+  setRefresh?: Dispatch<SetStateAction<number>>
+  redirectionPath: (typeof paths)[keyof typeof paths]
 }
 const EstateCard = ({
   id,
@@ -33,6 +34,7 @@ const EstateCard = ({
   lastUpdate,
   oldestPrice,
   setRefresh,
+  redirectionPath,
 }: EstateCardProps) => {
   const noPriceChange = oldestPrice === price
   const priceChange = clearPrice(price) - clearPrice(oldestPrice)
@@ -41,11 +43,11 @@ const EstateCard = ({
     const answer = window.confirm("Are you sure you want to archive this offer?")
     if (!answer) return
     const data = await archiveOffer(id)
-    if (data) setRefresh(Math.random())
+    if (data) setRefresh?.(Math.random())
   }
 
   return (
-    <Link to={generatePath(paths.offer, { offerId: id, priceChange })}>
+    <Link to={generatePath(redirectionPath, { offerId: id, priceChange: `${priceChange}` })}>
       <StyledCard
         hoverable
         cover={<Image preview={false} src={thumbnail} />}

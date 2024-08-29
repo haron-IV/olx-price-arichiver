@@ -16,10 +16,10 @@
     "noEmit": true,
     "jsx": "react-jsx",
     "noImplicitAny": false,
-    "baseUrl": "../",
+    "baseUrl": "./",
     "paths": {
-      "@/*": ["*"]
-    } /* Specify a set of entries that re-map imports to additional lookup locations. */
+      "@/*": ["../*"]
+    }
   },
   "include": ["src", "../"]
 }

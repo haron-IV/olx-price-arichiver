@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import { fetchGrouppedDataItem } from "../utils/fetch-data"
+import { Link, useMatch, useParams } from "react-router-dom"
+import { fetchArchivedDataItem, fetchGrouppedDataItem } from "../utils/fetch-data"
 import { clearPrice, sortNewestFirst } from "../utils"
 import { Carousel, Divider, Flex, Tag, Typography } from "antd"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts"
 import { default as Map } from "../components/Map"
 import styled from "styled-components"
+import { paths } from "src/router"
 
 type Data = Awaited<ReturnType<typeof fetchGrouppedDataItem> | undefined>
 interface SlideProps {
@@ -20,12 +21,15 @@ const Slide = styled("div")<SlideProps>(({ src }) => ({
 }))
 
 const Offer = () => {
+  const isArchivedOffer = useMatch(paths.archivedOffer)
   const { offerId, priceChange } = useParams()
   const [data, setData] = useState<Data>()
 
   useEffect(() => {
     const getData = async () => {
-      const response = await fetchGrouppedDataItem(offerId)
+      let response
+      if (isArchivedOffer) response = await fetchArchivedDataItem(offerId)
+      else response = await fetchGrouppedDataItem(offerId)
       if (!response) return
       setData(sortNewestFirst(response))
     }
@@ -34,9 +38,7 @@ const Offer = () => {
 
   const prices = data
     ?.map(({ params, timestamp }) => ({
-      price: clearPrice(
-        params.find((param) => param.name === "Cena")?.value || "",
-      ),
+      price: clearPrice(params.find((param) => param.name === "Cena")?.value || ""),
       date: new Date(timestamp).toLocaleDateString(),
     }))
     .reverse()
@@ -61,12 +63,7 @@ const Offer = () => {
           ))}
         </Flex>
         <Flex>
-          <LineChart
-            width={500}
-            height={350}
-            data={prices}
-            style={{ margin: "20px" }}
-          >
+          <LineChart width={500} height={350} data={prices} style={{ margin: "20px" }}>
             <Line
               type="monotone"
               dataKey="price"
@@ -78,11 +75,7 @@ const Offer = () => {
             <Tooltip />
           </LineChart>
           <div style={{ width: 500, height: 350 }}>
-            <Map
-              points={[
-                { lng: data?.[0].map.lon || 0, lat: data?.[0].map.lat || 0 },
-              ]}
-            />
+            <Map points={[{ lng: data?.[0].map.lon || 0, lat: data?.[0].map.lat || 0 }]} />
           </div>
         </Flex>
       </div>

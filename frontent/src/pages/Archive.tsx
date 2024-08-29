@@ -3,18 +3,17 @@ import { getArchive } from "../utils/fetch-data"
 import { Flex, Layout } from "antd"
 import { sortNewestFirst } from "../utils"
 import EstateCard from "../components/EstateCard"
+import { GrouppedAnnouncements } from "@/services"
+import { paths } from "src/router"
 
-// TODO:
 const Archive = () => {
-  const [data, setData] = useState()
-  const [refresh, seRefresh] = useState(0)
+  const [data, setData] = useState<GrouppedAnnouncements>()
 
   useEffect(() => {
     const getData = async () => {
       const data = await getArchive()
       setData(data)
     }
-
     getData()
   }, [])
 
@@ -24,7 +23,7 @@ const Archive = () => {
     <Layout>
       <Flex wrap gap="middle">
         {entries.map(([key, items]) => {
-          const sorted = sortNewestFirst<typeof items>(items) || []
+          const sorted = sortNewestFirst<typeof items>(items || []) || []
           const oldestItem = sorted[sorted.length - 1]
 
           return (
@@ -37,7 +36,7 @@ const Archive = () => {
               price={sorted[0].params.find((p) => p.name === "Cena")?.value || ""}
               lastUpdate={new Date(sorted[0].timestamp || 0).toUTCString()}
               oldestPrice={oldestItem.params.find((p) => p.name === "Cena")?.value || ""}
-              setRefresh={seRefresh}
+              redirectionPath={paths.archivedOffer}
             />
           )
         })}
