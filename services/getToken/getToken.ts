@@ -1,10 +1,17 @@
-import p from "puppeteer"
+import p, { Page } from "puppeteer"
 import { NotificationCenter } from "node-notifier"
 import path from "path"
 
 const nc = new NotificationCenter()
 
-export const getToken = async () => {
+const removeExpiredAccessToken = async (page: Page) => {
+  const cookies = await page.cookies()
+  const accessToken = cookies.find(({ name }) => name === "access_token")
+  if (accessToken) await page.deleteCookie(accessToken)
+  console.log("Expired token removed")
+}
+
+export const getToken = async (error?: boolean) => {
   const browser = await p.launch({
     headless: false,
     userDataDir: "./userData",
@@ -13,15 +20,19 @@ export const getToken = async () => {
   })
   const page = await browser.newPage()
   await page.goto("https://olx.pl", { waitUntil: "domcontentloaded" })
-  await page.deleteCookie({ name: "access_token" })
-  await page.reload({ waitUntil: "domcontentloaded" })
+
+  if (error) {
+    removeExpiredAccessToken(page)
+    await page.reload({ waitUntil: "domcontentloaded" })
+  }
 
   const cookies = await page.cookies()
   const accessToken = cookies.find(({ name }) => name === "access_token")
 
-  process.env.TOKEN = accessToken?.value // set token to env
-
-  if (!process.env.TOKEN) {
+  if (accessToken?.value) {
+    browser.close()
+    return accessToken?.value
+  } else
     nc.notify(
       {
         title: "ACTION NEEDED",
@@ -37,5 +48,4 @@ export const getToken = async () => {
         }
       },
     )
-  } else browser.close()
 }
