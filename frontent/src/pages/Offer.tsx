@@ -1,52 +1,43 @@
-import { useEffect, useState } from "react"
-import { Link, useParams } from "react-router-dom"
-import { fetchGrouppedDataItem } from "../utils/fetch-data"
-import { clearPrice, sortNewestFirst } from "../utils"
-import { Carousel, Divider, Flex, Tag, Typography } from "antd"
+import { useEffect, useMemo, useState } from "react"
+import { Link, useMatch, useParams } from "react-router-dom"
+import { Divider, Flex, Tag, Typography } from "antd"
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip } from "recharts"
-import { default as Map } from "../components/Map"
-import styled from "styled-components"
+import { GrouppedAnnouncements } from "@/services"
+import { paths } from "router"
+import { clearPrice, getArchivedDataItem, getGrouppedDataItem, sortNewestFirst } from "utils"
+import { Map, Slider } from "components"
 
-type Data = Awaited<ReturnType<typeof fetchGrouppedDataItem> | undefined>
-interface SlideProps {
-  src?: string
-}
-const Slide = styled("div")<SlideProps>(({ src }) => ({
-  width: "100%",
-  height: 300,
-  backgroundImage: `url(${src})`,
-  backgroundSize: "cover",
-  backgroundPosition: "center",
-}))
+type Data = Exclude<GrouppedAnnouncements, undefined>[0] | undefined
 
 const Offer = () => {
+  const isArchivedOffer = useMatch(paths.archivedOffer)
   const { offerId, priceChange } = useParams()
   const [data, setData] = useState<Data>()
 
   useEffect(() => {
-    const getData = async () => {
-      const response = await fetchGrouppedDataItem(offerId)
+    ;(async () => {
+      let response
+      if (isArchivedOffer) response = await getArchivedDataItem(offerId)
+      else response = await getGrouppedDataItem(offerId)
       if (!response) return
       setData(sortNewestFirst(response))
-    }
-    getData()
-  }, [])
+    })()
+  }, [setData, isArchivedOffer, offerId])
 
-  const prices = data
-    ?.map(({ params, timestamp }) => ({
-      price: clearPrice(
-        params.find((param) => param.name === "Cena")?.value || "",
-      ),
-      date: new Date(timestamp).toLocaleDateString(),
-    }))
-    .reverse()
+  const prices = useMemo(
+    () =>
+      data
+        ?.map(({ params, timestamp }) => ({
+          price: clearPrice(params.find((param) => param.name === "Cena")?.value || ""),
+          date: new Date(timestamp).toLocaleDateString(),
+        }))
+        .reverse(),
+    [data],
+  )
 
   return (
     <>
-      <Carousel arrows autoplay style={{ minHeight: 300 }}>
-        {data?.[0].photos.map((url) => <Slide key={url} src={url} />)}
-      </Carousel>
-
+      <Slider photos={data?.[0].photos} />
       <Divider />
       <div style={{ margin: 10 }}>
         <Link to={data?.[0].url || ""}>
@@ -61,12 +52,7 @@ const Offer = () => {
           ))}
         </Flex>
         <Flex>
-          <LineChart
-            width={500}
-            height={350}
-            data={prices}
-            style={{ margin: "20px" }}
-          >
+          <LineChart width={500} height={350} data={prices} style={{ margin: "20px" }}>
             <Line
               type="monotone"
               dataKey="price"
@@ -78,11 +64,7 @@ const Offer = () => {
             <Tooltip />
           </LineChart>
           <div style={{ width: 500, height: 350 }}>
-            <Map
-              points={[
-                { lng: data?.[0].map.lon || 0, lat: data?.[0].map.lat || 0 },
-              ]}
-            />
+            <Map points={[{ lng: data?.[0].map.lon || 0, lat: data?.[0].map.lat || 0 }]} />
           </div>
         </Flex>
       </div>

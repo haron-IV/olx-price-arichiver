@@ -24,12 +24,12 @@ console.log = (...args: unknown[]) => {
 }
 
 const init = async (server?: Server) => {
-  if (!process.env.TOKEN) await getToken()
-  let announcements = await getAnnouncements()
+  const token = await getToken()
+  let announcements = await getAnnouncements(token)
 
   if (typeof announcements === "string" && announcements === "invalid_token") {
-    await getToken()
-    announcements = await getAnnouncements()
+    const token = await getToken(true)
+    announcements = await getAnnouncements(token)
   }
 
   if (!announcements || typeof announcements === "string")

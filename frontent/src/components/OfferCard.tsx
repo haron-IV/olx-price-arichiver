@@ -4,14 +4,14 @@ import { styled } from "styled-components"
 import { Link, generatePath } from "react-router-dom"
 import { paths } from "../router"
 import { clearPrice } from "../utils"
-import { archiveOffer } from "../utils/fetch-data"
+import { archiveOffer } from "../utils/services"
 
 const StyledCard = styled(Card)({
   ".ant-card-meta-title": { fontSize: 10 },
   ".ant-image-img": { maxHeight: 180, objectFit: "cover" },
 })
 
-interface EstateCardProps extends PropsWithChildren {
+interface OfferCardProps extends PropsWithChildren {
   id: string
   /** url for the image */
   thumbnail?: string
@@ -22,9 +22,10 @@ interface EstateCardProps extends PropsWithChildren {
   lastUpdate: string
   oldestPrice: string
   /** random number to refresh parent data */
-  setRefresh: Dispatch<SetStateAction<number>>
+  setRefresh?: Dispatch<SetStateAction<number>>
+  redirectionPath: (typeof paths)[keyof typeof paths]
 }
-const EstateCard = ({
+const OfferCard = ({
   id,
   thumbnail,
   title,
@@ -33,7 +34,8 @@ const EstateCard = ({
   lastUpdate,
   oldestPrice,
   setRefresh,
-}: EstateCardProps) => {
+  redirectionPath,
+}: OfferCardProps) => {
   const noPriceChange = oldestPrice === price
   const priceChange = clearPrice(price) - clearPrice(oldestPrice)
 
@@ -41,17 +43,15 @@ const EstateCard = ({
     const answer = window.confirm("Are you sure you want to archive this offer?")
     if (!answer) return
     const data = await archiveOffer(id)
-    if (data) setRefresh(Math.random())
+    if (data) setRefresh?.(Math.random())
   }
 
   return (
-    <Link to={generatePath(paths.offer, { offerId: id, priceChange })}>
+    <Link to={generatePath(redirectionPath, { offerId: id, priceChange: `${priceChange}` })}>
       <StyledCard
         hoverable
         cover={<Image preview={false} src={thumbnail} />}
-        style={{
-          width: 250,
-        }}
+        style={{ width: 250 }}
       >
         <Card.Meta
           title={title}
@@ -100,4 +100,4 @@ const EstateCard = ({
   )
 }
 
-export default EstateCard
+export default OfferCard

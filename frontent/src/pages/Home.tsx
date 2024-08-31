@@ -1,21 +1,19 @@
 import { useEffect, useState } from "react"
-import { GrouppedAnnouncements } from "../../../services"
-import { fetchGrouppedData } from "../utils/fetch-data"
-import { isDefined, sortNewestFirst } from "../utils"
 import { Flex, Layout } from "antd"
-import EstateCard from "../components/EstateCard"
+import { GrouppedAnnouncements } from "@/services"
+import { getGrouppedData, isDefined, sortNewestFirst } from "utils"
+import { paths } from "router"
+import { OfferCard } from "components"
 
 const Home = () => {
   const [data, setData] = useState<GrouppedAnnouncements>()
   const [refresh, seRefresh] = useState(0)
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await fetchGrouppedData()
+    ;(async () => {
+      const data = await getGrouppedData()
       setData(data)
-    }
-
-    getData()
+    })()
   }, [refresh])
 
   const entries = (data && Object.entries(data)) || []
@@ -33,20 +31,17 @@ const Home = () => {
             const oldestItem = sorted[sorted.length - 1]
 
             return (
-              <EstateCard
+              <OfferCard
                 key={key}
                 id={key}
                 thumbnail={oldestItem.photos[0] || ""} // oldest photo to have consistency in displayed UI
                 title={sorted[0].title || ""}
                 privateEstate={!sorted[0].business}
-                price={
-                  sorted[0].params.find((p) => p.name === "Cena")?.value || ""
-                }
+                price={sorted[0].params.find((p) => p.name === "Cena")?.value || ""}
                 lastUpdate={new Date(sorted[0].timestamp || 0).toUTCString()}
-                oldestPrice={
-                  oldestItem.params.find((p) => p.name === "Cena")?.value || ""
-                }
+                oldestPrice={oldestItem.params.find((p) => p.name === "Cena")?.value || ""}
                 setRefresh={seRefresh}
+                redirectionPath={paths.offer}
               />
             )
           })}

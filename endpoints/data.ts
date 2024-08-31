@@ -1,19 +1,18 @@
 import express from "express"
-import {
-  archiveOffer,
-  getDb,
-  getGrouppedAnnouncement,
-  groupAnnouncements,
-} from "@/services"
+import { archiveOffer, getDb, getGrouppedAnnouncement } from "@/services"
+import { getGrouppedAnnouncements } from "@/services/groupAnnouncements/groupAnnouncements"
+import { getArchive, isGroupped } from "@/services/archive/archive"
+import type { GetArchiveQueryParams } from "./data.types"
+import { groupBy } from "@/utils"
 
-const dataRouter = express.Router()
+export const dataRouter = express.Router()
 
-dataRouter.get("/archive", (req, res) => {
+dataRouter.get("/", (req, res) => {
   res.send(getDb())
 })
 
 dataRouter.get("/grouppedData", (req, res) => {
-  res.send(groupAnnouncements("id"))
+  res.send(getGrouppedAnnouncements())
 })
 
 dataRouter.get("/grouppedData/:id", (req, res) => {
@@ -25,4 +24,16 @@ dataRouter.delete("/grouppedData/:id/archive", (req, res) => {
   res.status(200).send(true)
 })
 
-export default dataRouter
+// ARCHIVE
+export const archiveRouter = express.Router()
+
+archiveRouter.get<unknown, unknown, unknown, GetArchiveQueryParams>("/", (req, res) => {
+  const archive = getArchive(JSON.parse(req.query.groupped))
+  res.send(archive)
+})
+
+archiveRouter.get("/:offerId", (req, res) => {
+  const archive = getArchive(true)
+  if (!archive || !req.params.offerId) return {}
+  if (isGroupped(archive)) res.send((archive as ReturnType<typeof groupBy>)?.[req.params.offerId])
+})
