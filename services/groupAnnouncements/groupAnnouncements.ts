@@ -12,6 +12,7 @@ const groupAnnouncements = (db: DB, by: GroupBy, notArchived: boolean = true) =>
 
   return groupBy(db.items, by)
 }
+export type GrouppedAnnouncements = ReturnType<typeof groupAnnouncements>
 
 export const getGrouppedAnnouncements = () => {
   const db = getDb()
@@ -28,5 +29,3 @@ export const getGrouppedAnnouncement = (id: string) => {
     error("Something wen wrong while fetching grouppedData")
   }
 }
-
-export type GrouppedAnnouncements = ReturnType<typeof groupAnnouncements>

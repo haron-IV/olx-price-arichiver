@@ -4,14 +4,14 @@ import { styled } from "styled-components"
 import { Link, generatePath } from "react-router-dom"
 import { paths } from "../router"
 import { clearPrice } from "../utils"
-import { archiveOffer } from "../utils/fetch-data"
+import { archiveOffer } from "../utils/services"
 
 const StyledCard = styled(Card)({
   ".ant-card-meta-title": { fontSize: 10 },
   ".ant-image-img": { maxHeight: 180, objectFit: "cover" },
 })
 
-interface EstateCardProps extends PropsWithChildren {
+interface OfferCardProps extends PropsWithChildren {
   id: string
   /** url for the image */
   thumbnail?: string
@@ -25,7 +25,7 @@ interface EstateCardProps extends PropsWithChildren {
   setRefresh?: Dispatch<SetStateAction<number>>
   redirectionPath: (typeof paths)[keyof typeof paths]
 }
-const EstateCard = ({
+const OfferCard = ({
   id,
   thumbnail,
   title,
@@ -35,7 +35,7 @@ const EstateCard = ({
   oldestPrice,
   setRefresh,
   redirectionPath,
-}: EstateCardProps) => {
+}: OfferCardProps) => {
   const noPriceChange = oldestPrice === price
   const priceChange = clearPrice(price) - clearPrice(oldestPrice)
 
@@ -51,9 +51,7 @@ const EstateCard = ({
       <StyledCard
         hoverable
         cover={<Image preview={false} src={thumbnail} />}
-        style={{
-          width: 250,
-        }}
+        style={{ width: 250 }}
       >
         <Card.Meta
           title={title}
@@ -102,4 +100,4 @@ const EstateCard = ({
   )
 }
 
-export default EstateCard
+export default OfferCard

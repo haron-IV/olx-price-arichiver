@@ -27,7 +27,7 @@ const Map = ({ points }: MapProps) => {
       style: maptilersdk.MapStyle.STREETS,
       ...config,
     })
-  }, [poland.lng, poland.lat])
+  }, [])
 
   useEffect(() => {
     if (!points) return
@@ -43,11 +43,7 @@ const Map = ({ points }: MapProps) => {
 
   return (
     <div className="map-wrap" style={{ width: "100%", height: "100%" }}>
-      <div
-        ref={mapContainer}
-        className="map"
-        style={{ width: "100%", height: "100%" }}
-      />
+      <div ref={mapContainer} className="map" style={{ width: "100%", height: "100%" }} />
     </div>
   )
 }

@@ -1,22 +1,19 @@
 import { useEffect, useState } from "react"
-import { GrouppedAnnouncements } from "../../../services"
-import { fetchGrouppedData } from "../utils/fetch-data"
-import { isDefined, sortNewestFirst } from "../utils"
 import { Flex, Layout } from "antd"
-import EstateCard from "../components/EstateCard"
-import { paths } from "src/router"
+import { GrouppedAnnouncements } from "@/services"
+import { getGrouppedData, isDefined, sortNewestFirst } from "utils"
+import { paths } from "router"
+import { OfferCard } from "components"
 
 const Home = () => {
   const [data, setData] = useState<GrouppedAnnouncements>()
   const [refresh, seRefresh] = useState(0)
 
   useEffect(() => {
-    const getData = async () => {
-      const data = await fetchGrouppedData()
+    ;(async () => {
+      const data = await getGrouppedData()
       setData(data)
-    }
-
-    getData()
+    })()
   }, [refresh])
 
   const entries = (data && Object.entries(data)) || []
@@ -34,7 +31,7 @@ const Home = () => {
             const oldestItem = sorted[sorted.length - 1]
 
             return (
-              <EstateCard
+              <OfferCard
                 key={key}
                 id={key}
                 thumbnail={oldestItem.photos[0] || ""} // oldest photo to have consistency in displayed UI

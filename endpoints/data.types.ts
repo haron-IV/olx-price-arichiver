@@ -1,3 +1,3 @@
-export interface GetArchiveParams {
+export interface GetArchiveQueryParams {
   groupped: string
 }

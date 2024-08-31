@@ -1,20 +1,18 @@
 import { useEffect, useState } from "react"
-import { getArchive } from "../utils/fetch-data"
 import { Flex, Layout } from "antd"
-import { sortNewestFirst } from "../utils"
-import EstateCard from "../components/EstateCard"
 import { GrouppedAnnouncements } from "@/services"
-import { paths } from "src/router"
+import { paths } from "router"
+import { OfferCard } from "components"
+import { getArchive, sortNewestFirst } from "utils"
 
 const Archive = () => {
   const [data, setData] = useState<GrouppedAnnouncements>()
 
   useEffect(() => {
-    const getData = async () => {
+    ;(async () => {
       const data = await getArchive()
       setData(data)
-    }
-    getData()
+    })()
   }, [])
 
   const entries = (data && Object.entries(data)) || []
@@ -27,7 +25,7 @@ const Archive = () => {
           const oldestItem = sorted[sorted.length - 1]
 
           return (
-            <EstateCard
+            <OfferCard
               key={key}
               id={key}
               thumbnail={oldestItem.photos[0] || ""} // oldest photo to have consistency in displayed UI
