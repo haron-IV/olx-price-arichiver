@@ -1,7 +1,7 @@
 import "dotenv/config"
 import {
   getAnnouncements,
-  getToken,
+  getRequestHeaders,
   parseAnnouncements,
   saveChangedAnnouncements,
 } from "@/services"
@@ -24,18 +24,15 @@ console.log = (...args: unknown[]) => {
 }
 
 const init = async (server?: Server) => {
-  const token = await getToken()
-  let announcements = await getAnnouncements(token)
+  const headers = await getRequestHeaders()
 
-  if (typeof announcements === "string" && announcements === "invalid_token") {
-    const token = await getToken(true)
-    announcements = await getAnnouncements(token)
-  }
+  if (!headers!.authorization)
+    throw new Error("Missed autth token try to rerun app or to test it manually")
 
-  if (!announcements || typeof announcements === "string")
-    throw "invalid token try to change it manually"
+  const announcements = await getAnnouncements(headers)
+  if (announcements && typeof announcements !== "string")
+    saveChangedAnnouncements(parseAnnouncements(announcements))
 
-  saveChangedAnnouncements(parseAnnouncements(announcements))
   server?.close()
 }
 

@@ -7,19 +7,15 @@ export type { DB } from "./db/get"
 export { getAnnouncements } from "./getAnnouncements/getAnnouncements"
 export type { Announcements } from "./getAnnouncements/getAnnouncements.types"
 
-export { getToken } from "./getToken/getToken"
+export { getMe } from "./geMe/getMe"
 
-export {
-  groupAnnouncements,
-  getGrouppedAnnouncement,
-} from "./groupAnnouncements/groupAnnouncements"
+export { getRequestHeaders } from "./getRequestHeaders/getRequestHeaders"
+
+export { getGrouppedAnnouncement } from "./groupAnnouncements/groupAnnouncements"
 export type { GrouppedAnnouncements } from "./groupAnnouncements/groupAnnouncements"
 
 export { parseAnnouncements } from "./parseAnnouncements/parseAnnouncements"
-export type {
-  ParsedAnnouncements,
-  Announcement,
-} from "./parseAnnouncements/parseAnnouncements"
+export type { ParsedAnnouncements, Announcement } from "./parseAnnouncements/parseAnnouncements"
 
 export { saveChangedAnnouncements } from "./saveChangedAnnouncements/saveChangedAnnouncements"
 

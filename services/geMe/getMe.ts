@@ -1,28 +1,26 @@
 import { error } from "console"
-import type { Announcements } from "./getAnnouncements.types"
+import { Me } from "./getMe.types"
 
-export const getAnnouncements = async (
-  headers?: Record<string, string>,
-): Promise<Announcements | string | undefined> => {
+export const getMe = async (token?: string): Promise<Me | undefined | string> => {
   try {
-    const response = await fetch("https://www.olx.pl/api/v1/users/me/observed-ads/", {
+    const response = await fetch("https://www.olx.pl/api/v1/users/me/", {
       headers: {
         accept: "*/*",
         "accept-language": "pl",
-        authorization: headers!.authorization,
+        authorization: `Bearer ${token}`,
         priority: "u=1, i",
-        "sec-ch-ua": '"Not;A=Brand";v="24", "Chromium";v="128"',
+        "sec-ch-ua": '"Chromium";v="127", "Not)A;Brand";v="99"',
         "sec-ch-ua-mobile": "?0",
         "sec-ch-ua-platform": '"macOS"',
         "sec-fetch-dest": "empty",
         "sec-fetch-mode": "cors",
         "sec-fetch-site": "same-origin",
         "x-client": "DESKTOP",
-        "x-device-id": headers!["x-device-id"],
-        "x-fingerprint": headers!["x-fingerprint"],
+        "x-device-id": `${process.env.X_DEVOCE_ID}`,
+        "x-fingerprint": `${process.env.X_FINGERPRINT}`,
         "x-platform-type": "mobile-html5",
-        cookie: headers!.cookie,
-        Referer: "https://www.olx.pl/observed/",
+        cookie: `${process.env.COOKIE}`,
+        Referer: "https://www.olx.pl/",
         "Referrer-Policy": "strict-origin-when-cross-origin",
       },
       body: null,
@@ -31,9 +29,9 @@ export const getAnnouncements = async (
 
     if (response.status !== 200) throw await response.json()
 
-    return (await response.json()) as Announcements
+    return (await response).json() as unknown as Me
   } catch (err) {
-    error("ERROR WHILE FETCHING ANNOUNCEMENTS:", err)
+    error("ERROR WHILE FETCHING ME: ", err)
     if (err && typeof err == "object" && "error" in err) return err.error as string
   }
 }
