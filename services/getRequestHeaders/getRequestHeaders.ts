@@ -1,13 +1,13 @@
 import p, { type HTTPRequest, type Page } from "puppeteer"
 import { NotificationCenter } from "node-notifier"
 import path from "path"
-import { getMe } from "../geMe/getMe"
+import { getMe } from "../index"
 
 const nc = new NotificationCenter()
 
-const isTokenValid = async (token: string) => {
+const areHeadersValid = async (request: HTTPRequest) => {
   try {
-    const response = await getMe(token)
+    const response = await getMe(request.headers())
     return typeof response !== "string" && !!response
   } catch {
     return false
@@ -42,12 +42,11 @@ export const getRequestHeaders = async () => {
     const token = interceptedRequest.headers()["authorization"]
     if (token) requests = [...new Set([...requests, interceptedRequest])]
   })
-  //https://www.olx.pl/observed/
   await page.goto("https://olx.pl", { waitUntil: "networkidle2" })
 
   const validReequestSettings: Record<string, string> = {}
   for await (const request of requests) {
-    const isValid = await isTokenValid(request.headers()["authorization"].split(" ")[1].trim())
+    const isValid = await areHeadersValid(request)
     if (isValid) Object.assign(validReequestSettings, request.headers())
   }
 

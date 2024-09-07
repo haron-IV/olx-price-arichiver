@@ -1,4 +1,6 @@
 import "dotenv/config"
+import minimist from "minimist"
+import type { Server } from "http"
 import {
   getAnnouncements,
   getRequestHeaders,
@@ -6,8 +8,6 @@ import {
   saveChangedAnnouncements,
 } from "@/services"
 import { initApi } from "./api"
-import minimist from "minimist"
-import type { Server } from "http"
 
 enum Flag {
   Dev = "dev",
