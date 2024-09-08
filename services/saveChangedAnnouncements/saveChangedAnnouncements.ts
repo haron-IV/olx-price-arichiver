@@ -1,33 +1,29 @@
-import { announcedChanged, getDb, setDb, type ParsedAnnouncements } from "../index"
+import { getDb, getGrouppedAnnouncements, setDb, type ParsedAnnouncements } from "../index"
 
 export const saveChangedAnnouncements = (newAnnouncements: ParsedAnnouncements) => {
   const db = getDb()
   if (!db?.items) return
 
-  let changedEntries: ParsedAnnouncements = []
+  const changedEntries: ParsedAnnouncements = []
 
-  //detect new announcements
-  const oldIds = db.items.map(({ id }) => `${id}`)
-  newAnnouncements.forEach((newAnnouncement) => {
-    if (
-      oldIds.includes(`${newAnnouncement.id}`) ||
-      db.archivedIds.includes(`${newAnnouncement.id}`)
+  const grouppedOld = getGrouppedAnnouncements()
+
+  newAnnouncements.forEach((newItem) => {
+    if (!grouppedOld) return
+
+    const itemsToCheck = grouppedOld[newItem.id]
+
+    if (!itemsToCheck) changedEntries.push(newItem) // new entry - no id in db
+
+    const noChanges = !!itemsToCheck?.find(
+      (item) =>
+        item.params.find(({ name }) => name === "Cena")?.value ===
+        newItem.params.find(({ name }) => name === "Cena")?.value,
     )
-      return
-    changedEntries.push({ ...newAnnouncement, timestamp: new Date().getTime() })
-  })
 
-  // detect changed announcements
-  db.items.forEach((oldAnnouncement) => {
-    newAnnouncements?.forEach((newAnnouncement) => {
-      const isEntryInDb = oldAnnouncement.id === newAnnouncement.id
+    if (noChanges) return
 
-      if (isEntryInDb && announcedChanged(oldAnnouncement, newAnnouncement))
-        changedEntries = [
-          ...changedEntries,
-          { ...newAnnouncement, timestamp: new Date().getTime() },
-        ]
-    })
+    changedEntries.push(newItem)
   })
 
   const changesDetected = changedEntries.length > 0
